@@ -24,7 +24,7 @@ const secret_key_mnemonics = process.env.mnemonics as string;
 const network = process.env.network as "mainnet" | "testnet" | "devnet" | "localnet";
 
 const keypair = Ed25519Keypair.deriveKeypair(secret_key_mnemonics);
-console.log(keypair.getPublicKey().toSuiAddress())
+console.log(`Using the address: `, keypair.getPublicKey().toSuiAddress())
 
 const client = new SuiClient({
     url: getFullnodeUrl(network),
@@ -53,7 +53,7 @@ const allVsuiTokens = await client.getBalance({
     coinType: VSUI,
 });
 const vSuiBalance = Number(allVsuiTokens.totalBalance);
-assert(vSuiBalance >= 1 * decimal, "No vSUI Balance");
+assert(vSuiBalance >= 1 * decimal, "Not enough vSUI Balance");
 
 let allvSuitokens = await client.getCoins({
     owner: sender,
